@@ -47,12 +47,12 @@
         </ul>
     </nav>
     <div class="container">
-    <h4 class="card-panel red lighten-3 black-text center">Registros de Clientes</h4><br>
+    <h4 class="card-panel red lighten-3 black-text center">Modificacion de Cliente</h4><br>
 
         <form class="col s12"> 
         <div class="row">
                 <div class="input-field col s6">
-                    <input type="text" id="Cedula" name="txtCedula" value='<?php echo $row['cedula']?>' required><br>
+                    <input type="text" id="Cedula" name="txtCedula" value='<?php echo $row['cedula']?>' disabled><br>
                     <label for="Cedula">Cedula</label><br>
                     
                 </div>

@@ -13,7 +13,7 @@ class PDF extends FPDF
       $this->Cell(45); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
       //creamos una celda o fila
-      $this->Cell(110, 15, utf8_decode('EMBOTELLADORA THOMSOM'), 1, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+      $this->Cell(110, 15, utf8_decode('ICAR PLUS'), 1, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
 
@@ -24,7 +24,7 @@ class PDF extends FPDF
       $this->SetTextColor(0, 0, 0);
       $this->Cell(50); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(100, 10, utf8_decode("REPORTE DE COMPRAS "), 0, 1, 'C', 0);
+      $this->Cell(100, 10, utf8_decode("REPORTE DE REPARACIONES "), 0, 1, 'C', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -32,14 +32,17 @@ class PDF extends FPDF
       $this->SetFillColor(255, 255, 255); //colorFondo
       $this->SetTextColor(0, 0, 0); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
-      $this->SetFont('Arial', 'B', 11);
+      $this->SetFont('Arial', 'B', 10);
       $this->Cell(18, 10, utf8_decode('ID'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, utf8_decode('CEDULA'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, utf8_decode('NOMBRE'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, utf8_decode('APELLIDO'), 1, 0, 'C', 1);
-      $this->Cell(22, 10, utf8_decode('CANTIDAD'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, utf8_decode('DIRECCION'), 1, 0, 'C', 1);
-      $this->Cell(38, 10, utf8_decode('FECHA'), 1, 1, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('MATRICULA'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('MODELO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('CED CLI'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('CLIENTE'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('SERIAL'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('REPUESTO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('CANTIDAD'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('CED MEC'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('MECANICO'), 1, 1, 'C', 1);
       // $this->Cell(70, 10, utf8_decode('CARACTERÍSTICAS'), 1, 0, 'C', 1);
       // $this->Cell(25, 10, utf8_decode('ESTADO'), 1, 1, 'C', 1);
    }
@@ -63,7 +66,7 @@ class PDF extends FPDF
 /* CONSULTA INFORMACION DEL HOSPEDAJE */
 //$consulta_info = $conexion->query(" select *from hotel ");
 //$dato_info = $consulta_info->fetch_object();
-$query = "SELECT embotella_registro.id, embotella_cliente.cedula, embotella_cliente.nombre, embotella_cliente.apellido, embotella_registro.cantidad,embotella_registro.direccion, embotella_registro.fechastamp FROM embotella_registro INNER JOIN embotella_cliente ON embotella_registro.cedula = embotella_cliente.cedula";
+$query = "SELECT concesio_registro.id as id, concesio_registro.matricula as matricula, concesio_vehiculo.modelo as modelo, concesio_cliente.cedula as cedcliente, concesio_cliente.nombre as cliente, concesio_registro.serial as serial, concesio_repuesto.nombre as repuesto,concesio_repuesto.cantidad as cantidad, ced_meca,concesio_mecanico.nombre as mecanico FROM concesio_registro inner join concesio_vehiculo on concesio_vehiculo.matricula=concesio_registro.matricula inner JOIN concesio_repuesto on concesio_repuesto.serial=concesio_registro.serial inner join concesio_mecanico on concesio_mecanico.cedula=concesio_registro.ced_meca inner join concesio_cliente on concesio_cliente.cedula=concesio_vehiculo.ced_cliente; ";
 $result = mysqli_query($conec, $query);
 if(!$result) {
    die('Query Failed'. mysqli_error($connection));
@@ -75,7 +78,7 @@ while ($row = $result->fetch_assoc()) {
 $pdf = new PDF();
 $pdf->AddPage(); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
 $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
-$pdf->SetFont('Arial', '', 11);
+$pdf->SetFont('Arial', '', 10);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
@@ -91,14 +94,16 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 // $pdf->Cell(25, 10, utf8_decode("total"), 1, 1, 'C', 0);
 $N_contador = 1;
 foreach ($data as $row) {
-    $fecha=date('d-m-Y H:i:s',$row['fechastamp']);
     $pdf->Cell(18, 10, utf8_decode($row['id']), 1, 0, 'C');
-    $pdf->Cell(30, 10, utf8_decode($row['cedula']), 1, 0, 'C'); // Centra la cédula
-    $pdf->Cell(30, 10, utf8_decode($row['nombre']), 1, 0, 'C'); // Centra el nombre
-    $pdf->Cell(30, 10, utf8_decode($row['apellido']), 1, 0, 'C'); // Centra el apellido
-    $pdf->Cell(22, 10, utf8_decode($row['cantidad']), 1, 0, 'C'); 
-    $pdf->Cell(30, 10, utf8_decode($row['direccion']), 1, 0, 'C'); 
-    $pdf->Cell(38, 10, utf8_decode($fecha), 1, 1, 'C'); 
+    $pdf->Cell(20, 10, utf8_decode($row['matricula']), 1, 0, 'C'); // Centra la cédula
+    $pdf->Cell(20, 10, utf8_decode($row['modelo']), 1, 0, 'C'); // Centra el nombre
+    $pdf->Cell(20, 10, utf8_decode($row['cedcliente']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(20, 10, utf8_decode($row['cliente']), 1, 0, 'C'); 
+    $pdf->Cell(20, 10, utf8_decode($row['serial']), 1, 0, 'C');
+    $pdf->Cell(20, 10, utf8_decode($row['repuesto']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(20, 10, utf8_decode($row['cantidad']), 1, 0, 'C'); 
+    $pdf->Cell(20, 10, utf8_decode($row['ced_meca']), 1, 0, 'C');  
+    $pdf->Cell(20, 10, utf8_decode($row['mecanico']), 1, 1, 'C'); 
 }
 
 

@@ -12,7 +12,7 @@ class PDF extends FPDF
       $this->Cell(45); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
       //creamos una celda o fila
-      $this->Cell(110, 15, utf8_decode('EMBOTELLADORA THOMSOM'), 1, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+      $this->Cell(110, 15, utf8_decode('ICAR PLUS'), 1, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
 
@@ -23,7 +23,7 @@ class PDF extends FPDF
       $this->SetTextColor(0, 0, 0);
       $this->Cell(50); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(100, 10, utf8_decode("REPORTE DE CLIENTES "), 0, 1, 'C', 0);
+      $this->Cell(100, 10, utf8_decode("REPORTE DE VEHICULOS "), 0, 1, 'C', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -31,11 +31,16 @@ class PDF extends FPDF
       $this->SetFillColor(255, 255, 255); //colorFondo
       $this->SetTextColor(0, 0, 0); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
-      $this->SetFont('Arial', 'B', 12);
-      $this->Cell(45, 10, utf8_decode('CEDULA'), 1, 0, 'C', 1);
-      $this->Cell(45, 10, utf8_decode('NOMBRE'), 1, 0, 'C', 1);
-      $this->Cell(45, 10, utf8_decode('APELLIDO'), 1, 0, 'C', 1);
-      $this->Cell(45, 10, utf8_decode('SEXO'), 1, 1, 'C', 1);
+      $this->SetFont('Arial', 'B', 10);
+      $this->Cell(23, 10, utf8_decode('MATRICULA'), 1, 0, 'C', 1);
+      $this->Cell(23, 10, utf8_decode('MARCA'), 1, 0, 'C', 1);
+      $this->Cell(23, 10, utf8_decode('MODELO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('TIPO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('AÑO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('CLASI.'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('DESC.'), 1, 0, 'C', 1);
+      $this->Cell(23, 10, utf8_decode('CED. DUEÑO'), 1, 0, 'C', 1);
+      $this->Cell(23, 10, utf8_decode('NOMBRE'), 1, 1, 'C', 1);
       // $this->Cell(70, 10, utf8_decode('CARACTERÍSTICAS'), 1, 0, 'C', 1);
       // $this->Cell(25, 10, utf8_decode('ESTADO'), 1, 1, 'C', 1);
    }
@@ -59,7 +64,7 @@ class PDF extends FPDF
 /* CONSULTA INFORMACION DEL HOSPEDAJE */
 //$consulta_info = $conexion->query(" select *from hotel ");
 //$dato_info = $consulta_info->fetch_object();
-$query = "SELECT cedula, nombre, apellido,sexo FROM embotella_cliente";
+$query = "SELECT * FROM `concesio_cliente` INNER JOIN concesio_vehiculo on cedula=ced_cliente; ";
 $result = mysqli_query($conec, $query);
 if(!$result) {
    die('Query Failed'. mysqli_error($connection));
@@ -71,7 +76,7 @@ while ($row = $result->fetch_assoc()) {
 $pdf = new PDF();
 $pdf->AddPage(); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
 $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 10);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 /*$consulta_reporte_alquiler = $conexion->query("  ");*/
@@ -87,18 +92,17 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 // $pdf->Cell(25, 10, utf8_decode("total"), 1, 1, 'C', 0);
 $N_contador = 1;
 foreach ($data as $row) {
-   if($row['sexo']=="M"){
-      $sexo="Masculino";
-  }
-  else{
-      $sexo="Femenino";
-  }
-    $pdf->Cell(45, 10, utf8_decode($row['cedula']), 1, 0, 'C'); // Centra la cédula
-    $pdf->Cell(45, 10, utf8_decode($row['nombre']), 1, 0, 'C'); // Centra el nombre
-    $pdf->Cell(45, 10, utf8_decode($row['apellido']), 1, 0, 'C'); // Centra el apellido
-    $pdf->Cell(45, 10, utf8_decode($sexo), 1, 1, 'C'); // Centra la zona/país y salta de línea
+    $pdf->Cell(23, 10, utf8_decode($row['matricula']), 1, 0, 'C'); // Centra la cédula
+    $pdf->Cell(23, 10, utf8_decode($row['marca']), 1, 0, 'C'); // Centra el nombre
+    $pdf->Cell(23, 10, utf8_decode($row['modelo']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(20, 10, utf8_decode($row['tipo']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(20, 10, utf8_decode($row['ano']), 1, 0, 'C'); // Centra el nombre
+    $pdf->Cell(20, 10, utf8_decode($row['clasificacion']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(20, 10, utf8_decode($row['descripcion']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(23, 10, utf8_decode($row['cedula']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(23, 10, utf8_decode($row['nombre']), 1, 1, 'C'); // Centra el apellido
     $N_contador++;
 }
 
 
-$pdf->Output('Clientes.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)
+$pdf->Output('Vehiculos.pdf', 'I');//nombreDescarga, Visor(I->visualizar - D->descargar)

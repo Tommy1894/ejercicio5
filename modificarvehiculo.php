@@ -1,8 +1,8 @@
 <?php
     require_once("assets/php/conexion.php");
 
-    $cedula=$_GET["cedula"];
-    $query="SELECT * FROM concesio_cliente where cedula='$cedula'";
+    $matricula=$_GET["matricula"];
+    $query="SELECT * FROM concesio_vehiculo where matricula='$matricula'";
     $rs = mysqli_query($conec, $query) or die('Error: ' . mysqli_error($conec));
     $row= mysqli_fetch_array($rs);
 ?>
@@ -47,44 +47,82 @@
         </ul>
     </nav>
     <div class="container">
-    <h4 class="card-panel red lighten-3 black-text center">Registros de Clientes</h4><br>
+    <h4 class="card-panel red lighten-3 black-text center">Modificacion de Vehiculo</h4><br>
 
-        <form class="col s12"> 
-        <div class="row">
+    <form id="formulario" class="col s12">
+            <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="Matricula" name="txtMatricula" value='<?php echo $row['matricula']?>' disabled><br>
+                        <label for="Matricula">Matricula</label><br>
+                        
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="Marca" name="txtMarca" value='<?php echo $row['marca']?>' required><br>
+                        <label for="Marca">Marca</label><br>
+                    </div>
+            </div>
+            
+            
+            <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="Modelo" name="txtModelo" value='<?php echo $row['modelo']?>'required><br>
+                        <label for="Modelo">Modelo</label><br>
+                    </div>
+                    <div class="input-field col s6">
+                        
+                            <select name="txtTipo" id="Tipo" required>
+                                <option value="" disabled selected>Escoge una opcion</option>   
+                                <option value="Sedan" <?php if($row['tipo']=='Sedan'){echo "selected";}?>>Sedan</option>
+                                <option value="Coupe" <?php if($row['tipo']=='Coupe'){echo "selected";}?>>Coupe</option>
+                                <option value="SUV" <?php if($row['tipo']=='SUV'){echo "selected";}?>>SUV</option>
+                                <option value="Convertible" <?php if($row['tipo']=='Convertible'){echo "selected";}?>>Convertible</option>
+                                <option value="Hatchback" <?php if($row['tipo']=='Hatchback'){echo "selected";}?>>Hatchback</option>
+                                <option value="Pick up" <?php if($row['tipo']=='Pick up'){echo "selected";}?>>Pick up</option>
+                                <option value="Crossover" <?php if($row['tipo']=='Crossover'){echo "selected";}?>>Crossover</option>
+                            </select>
+                            <label>Tipo</label><br>
+                    </div>
+            </div>
+            <div class="row">
                 <div class="input-field col s6">
-                    <input type="text" id="Cedula" name="txtCedula" value='<?php echo $row['cedula']?>' required><br>
-                    <label for="Cedula">Cedula</label><br>
+                    <input type="text" id="Ano" name="txtAno" value='<?php echo $row['ano']?>'><br>
+                    <label for="Ano">Año</label><br>
                     
                 </div>
                 <div class="input-field col s6">
-                    <input type="text" id="Nombre" name="txtNombre" value='<?php echo $row['nombre']?>' required><br>
-                    <label for="Nombre">Nombre</label><br>
+                    <select name="txtClasificacion" id="Clasificacion" required>
+                        <option value="" disabled selected>Escoge una opcion</option>   
+                        <option value="Segmento micro" <?php if($row['clasificacion']=='Segmento micro'){echo "selected";}?>>Segmento micro</option>
+                        <option value="Segmento A" <?php if($row['clasificacion']=='Segmento A'){echo "selected";}?>>Segmento A</option>
+                        <option value="Segmento B" <?php if($row['clasificacion']=='Segmento B'){echo "selected";}?>>Segmento B</option>
+                        <option value="Segmento C" <?php if($row['clasificacion']=='Segmento C'){echo "selected";}?>>Segmento C</option>
+                        <option value="Segmento D" <?php if($row['clasificacion']=='Segmento D'){echo "selected";}?>>Segmento D</option>
+                        <option value="Segmento E" <?php if($row['clasificacion']=='Segmento E'){echo "selected";}?>>Segmento E</option>
+                        <option value="Segmento F" <?php if($row['clasificacion']=='Segmento F'){echo "selected";}?>>Segmento F</option>
+                        <option value="Segmento J" <?php if($row['clasificacion']=='Segmento J'){echo "selected";}?>>Segmento J</option>
+                        <option value="Segmento M" <?php if($row['clasificacion']=='Segmento M'){echo "selected";}?>>Segmento M</option>
+                        <option value="Segmento S" <?php if($row['clasificacion']=='Segmento S'){echo "selected";}?>>Segmento S</option>
+                    </select>
+                    <label>Clasificacion</label><br>
                 </div>
-        </div>
-        <div class="row">
+            </div>
+            <div class="row">
                 <div class="input-field col s6">
-                    <input type="text" id="Apellido" name="txtApellido" value='<?php echo $row['apellido']?>' required><br>
-                    <label for="Apellido">Apellido</label><br>
+                    <input type="text" id="Descripcion" name="txtDescripcion" value='<?php echo $row['descripcion']?>'><br>
+                    <label for="Descripcion">Descripcion</label><br>
+                    
                 </div>
                 <div class="input-field col s6">
-                    <input type="number" id="Edad" name="txtEdad" value='<?php echo $row['edad']?>' required><br>
-                        <label>Edad</label><br>
+                    <input type="text" id="Cedula" name="txtCedula" value='<?php echo $row['ced_cliente']?>' disabled><br>
+                    <label for="Cedula">Cedula del dueño</label><br>
+                    
                 </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <select name="txtSexo" id="Sexo" required>
-                    <option value="" disabled selected>Escoge una opcion</option>   
-                    <option value="M" <?php if($row['sexo']=='M'){echo "selected";}?>>Masculino</option>
-                    <option value="F"  <?php if($row['sexo']=='F'){echo "selected";}?>>Femenino</option>
-                </select>
-                <label>Sexo</label><br>
-        </div>
-        </div>
-    </form>
+            </div>
+        
+        </form>
     <div class='center-align'>
-            <button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2" onclick="modificar_clie()">Modificar</button>
-            <a href="registrocliente.php"><button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2">Regresar</button></a>
+            <button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2" onclick=modificar_vehi()>Modificar</button>
+            <a href="registrovehiculo.php"><button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2">Regresar</button></a>
         </div><br><br>
         <h5 id="resultado" class="center-align"></h5><br>
     </div>

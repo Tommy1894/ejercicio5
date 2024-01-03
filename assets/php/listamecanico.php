@@ -2,7 +2,7 @@
 
   include('conexion.php');
 
-  $query = "SELECT cedula, nombre, apellido,sexo,edad FROM concesio_cliente";
+  $query = "SELECT cedula, nombre, apellido,sexo,edad,especialidad FROM concesio_mecanico";
   $result = mysqli_query($conec, $query);
   if(!$result) {
     die('Query Failed'. mysqli_error($connection));
@@ -21,7 +21,8 @@
       'nombre' => $row['nombre'],
       'apellido' => $row['apellido'],
       'sexo' => $sexo,
-      'edad'=>$row['edad']
+      'edad'=>$row['edad'],
+      'especialidad'=>$row['especialidad']
     );
   }
   $jsonstring = json_encode($json);

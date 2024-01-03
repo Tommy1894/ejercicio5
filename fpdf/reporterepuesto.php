@@ -12,7 +12,7 @@ class PDF extends FPDF
       $this->Cell(45); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
       //creamos una celda o fila
-      $this->Cell(110, 15, utf8_decode('EMBOTELLADORA THOMSOM'), 1, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+      $this->Cell(110, 15, utf8_decode('ICAR PLUS'), 1, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
 
@@ -23,7 +23,7 @@ class PDF extends FPDF
       $this->SetTextColor(0, 0, 0);
       $this->Cell(50); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(100, 10, utf8_decode("REPORTE DE CLIENTES "), 0, 1, 'C', 0);
+      $this->Cell(100, 10, utf8_decode("REPORTE DE REPUESTOS "), 0, 1, 'C', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -32,10 +32,11 @@ class PDF extends FPDF
       $this->SetTextColor(0, 0, 0); //colorTexto
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 12);
-      $this->Cell(45, 10, utf8_decode('CEDULA'), 1, 0, 'C', 1);
-      $this->Cell(45, 10, utf8_decode('NOMBRE'), 1, 0, 'C', 1);
-      $this->Cell(45, 10, utf8_decode('APELLIDO'), 1, 0, 'C', 1);
-      $this->Cell(45, 10, utf8_decode('SEXO'), 1, 1, 'C', 1);
+      $this->Cell(30);
+      $this->Cell(35, 10, utf8_decode('SERIAL'), 1, 0, 'C', 1);
+      $this->Cell(35, 10, utf8_decode('NOMBRE'), 1, 0, 'C', 1);
+      $this->Cell(35, 10, utf8_decode('MARCA'), 1, 0, 'C', 1);
+      $this->Cell(35, 10, utf8_decode('CANTIDAD'), 1, 1, 'C', 1);
       // $this->Cell(70, 10, utf8_decode('CARACTERÍSTICAS'), 1, 0, 'C', 1);
       // $this->Cell(25, 10, utf8_decode('ESTADO'), 1, 1, 'C', 1);
    }
@@ -59,7 +60,7 @@ class PDF extends FPDF
 /* CONSULTA INFORMACION DEL HOSPEDAJE */
 //$consulta_info = $conexion->query(" select *from hotel ");
 //$dato_info = $consulta_info->fetch_object();
-$query = "SELECT cedula, nombre, apellido,sexo FROM embotella_cliente";
+$query = "SELECT * FROM concesio_repuesto";
 $result = mysqli_query($conec, $query);
 if(!$result) {
    die('Query Failed'. mysqli_error($connection));
@@ -87,16 +88,11 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 // $pdf->Cell(25, 10, utf8_decode("total"), 1, 1, 'C', 0);
 $N_contador = 1;
 foreach ($data as $row) {
-   if($row['sexo']=="M"){
-      $sexo="Masculino";
-  }
-  else{
-      $sexo="Femenino";
-  }
-    $pdf->Cell(45, 10, utf8_decode($row['cedula']), 1, 0, 'C'); // Centra la cédula
-    $pdf->Cell(45, 10, utf8_decode($row['nombre']), 1, 0, 'C'); // Centra el nombre
-    $pdf->Cell(45, 10, utf8_decode($row['apellido']), 1, 0, 'C'); // Centra el apellido
-    $pdf->Cell(45, 10, utf8_decode($sexo), 1, 1, 'C'); // Centra la zona/país y salta de línea
+    $pdf->Cell(30);
+    $pdf->Cell(35, 10, utf8_decode($row['serial']), 1, 0, 'C'); // Centra la cédula
+    $pdf->Cell(35, 10, utf8_decode($row['nombre']), 1, 0, 'C'); // Centra el nombre
+    $pdf->Cell(35, 10, utf8_decode($row['marca']), 1, 0, 'C'); // Centra el apellido
+    $pdf->Cell(35, 10, utf8_decode($row['cantidad']), 1, 1, 'C'); // Centra el apellido
     $N_contador++;
 }
 

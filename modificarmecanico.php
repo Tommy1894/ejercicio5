@@ -2,7 +2,7 @@
     require_once("assets/php/conexion.php");
 
     $cedula=$_GET["cedula"];
-    $query="SELECT * FROM concesio_cliente where cedula='$cedula'";
+    $query="SELECT * FROM concesio_mecanico where cedula='$cedula'";
     $rs = mysqli_query($conec, $query) or die('Error: ' . mysqli_error($conec));
     $row= mysqli_fetch_array($rs);
 ?>
@@ -47,12 +47,12 @@
         </ul>
     </nav>
     <div class="container">
-    <h4 class="card-panel red lighten-3 black-text center">Registros de Clientes</h4><br>
+    <h4 class="card-panel red lighten-3 black-text center">Modificacion de Mecanico</h4><br>
 
         <form class="col s12"> 
         <div class="row">
                 <div class="input-field col s6">
-                    <input type="text" id="Cedula" name="txtCedula" value='<?php echo $row['cedula']?>' required><br>
+                    <input type="text" id="Cedula" name="txtCedula" value='<?php echo $row['cedula']?>' disabled><br>
                     <label for="Cedula">Cedula</label><br>
                     
                 </div>
@@ -72,19 +72,23 @@
                 </div>
         </div>
         <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6">
                 <select name="txtSexo" id="Sexo" required>
                     <option value="" disabled selected>Escoge una opcion</option>   
                     <option value="M" <?php if($row['sexo']=='M'){echo "selected";}?>>Masculino</option>
                     <option value="F"  <?php if($row['sexo']=='F'){echo "selected";}?>>Femenino</option>
                 </select>
                 <label>Sexo</label><br>
-        </div>
+            </div>
+            <div class="input-field col s6">
+                    <input type="text" id="Especialidad" name="txtEspecialidad" value='<?php echo $row['especialidad']?>' required><br>
+                        <label>Especialidad</label><br>
+                </div>
         </div>
     </form>
     <div class='center-align'>
-            <button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2" onclick="modificar_clie()">Modificar</button>
-            <a href="registrocliente.php"><button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2">Regresar</button></a>
+            <button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2" onclick="modificar_meca()">Modificar</button>
+            <a href="registromecanico.php"><button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2">Regresar</button></a>
         </div><br><br>
         <h5 id="resultado" class="center-align"></h5><br>
     </div>

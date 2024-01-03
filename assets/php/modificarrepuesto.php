@@ -3,31 +3,17 @@
 
     $serial = $_POST['serial'];
     $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $tipo=$_POST['tipo'];
-    $ano = $_POST['ano'];
-    $clasificacion = $_POST['clasificacion'];
-    $descripcion = $_POST['descripcion'];
-    $imagen=$_POST['imagen'];
-    $ced_cliente  = $_POST['ced_cliente '];
-    $query="SELECT * FROM concesio_vehiculo where matricula='$matricula'";
+    $nombre = $_POST['nombre'];
+    $cantidad=$_POST['cantidad'];
+    $query="SELECT * FROM concesio_repuesto where serial='$serial'";
     $rs = mysqli_query($conec, $query) or die('Error: ' . mysqli_error($conec)); //recordset ($rs)
-    if($rs->num_rows == 0){
-        $query2 = "UPDATE concesio_cliente SET cedula='$cedula', nombre='$nombre',
-        apellido='$apellido', edad='$edad', sexo='$sexo' WHERE cedula='$cedula'";
-        $rs2=mysqli_query($conec, $query2) or die('Error: ' . mysqli_error($conec));
-        if($rs2){
-            echo 'listo';
+    $query2 = "UPDATE concesio_repuesto SET marca='$marca', nombre='$nombre',
+    cantidad='$cantidad' WHERE serial='$serial'";
+    $rs2=mysqli_query($conec, $query2) or die('Error: ' . mysqli_error($conec));
+    if($rs2){
+        echo 'listo';
             
-        }else{
+    }else{
             echo 'Error No se actualizo el registro';
-        }
     }
-    else{
-        echo "error";
-       
-    }
-    
-    
-
 ?>

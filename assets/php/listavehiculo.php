@@ -10,18 +10,17 @@
 
   $json = array();
   while($row = mysqli_fetch_array($result)) {
-    if($row['sexo']=="M"){
-        $sexo="Masculino";
-    }
-    else{
-        $sexo="Femenino";
-    }
+    
     $json[] = array(
-      'cedula' => $row['cedula'],
-      'nombre' => $row['nombre'],
-      'apellido' => $row['apellido'],
-      'sexo' => $sexo,
-      'edad'=>$row['edad']
+      'matricula' => $row['matricula'],
+      'marca' => $row['marca'],
+      'modelo' => $row['modelo'],
+      'tipo' => $row['tipo'],
+      'ano'=>$row['ano'],
+      'clasificacion' => $row['clasificacion'],
+      'descripcion' => $row['descripcion'],
+      'imagen' => $row['imagen'],
+      'ced_cliente' => $row['ced_cliente']
     );
   }
   $jsonstring = json_encode($json);

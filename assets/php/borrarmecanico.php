@@ -3,7 +3,7 @@
 
     $cedula = $_POST['cedula'];
 
-    $query = "DELETE FROM concesio_repuesto WHERE cedula='$cedula'";
+    $query = "DELETE FROM concesio_mecanico WHERE cedula='$cedula'";
 
     $rs = mysqli_query($conec, $query) or die('Error: ' . mysqli_error($conec)); //recordset ($rs)
 

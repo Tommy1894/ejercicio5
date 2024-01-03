@@ -34,8 +34,8 @@
     <nav id="bloc" class="nav-wrapper red darken-2">
         <a class="brand-logo center">iCar Plus</a>
         <ul id="nav-mobile" class="right">
-        <li><a href="inicio.html">Inicio</a></li>
-        <li><a href="index.html">Cerrar sesion</a></li>
+        <li><a href="inicio.php">Inicio</a></li>
+        <li><a href="index.php">Cerrar sesion</a></li>
         </ul>
     </nav>
     <div class="container">

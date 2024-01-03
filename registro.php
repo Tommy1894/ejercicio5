@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embotelladora Thomsom</title>
+    <title>iCar Plus</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style>
@@ -34,60 +34,70 @@
     <nav id="bloc" class="nav-wrapper red darken-2">
         <a class="brand-logo center">iCar Plus</a>
         <ul id="nav-mobile" class="right">
-        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="inicio.php">Inicio</a></li>
         <li><a href="index.php">Cerrar sesion</a></li>
         </ul>
     </nav>
     <div class="container">
-    <h4 class="card-panel red lighten-3 black-text center">Registros de Clientes</h4><br>
+    <h4 class="card-panel red lighten-3 black-text center">Registro de Reparaciones</h4><br>
 
-        <form class="col s12"> 
+    <form class="col s12"> 
         <div class="row">
                 <div class="input-field col s6">
                     <input type="text" id="Cedula" name="txtCedula"><br>
-                    <label for="Cedula">Cedula</label><br>
+                    <label for="Cedula">Cedula del mecanico</label><br>
                     
                 </div>
                 <div class="input-field col s6">
-                    <input type="text" id="Nombre" name="txtCedula" required><br>
-                    <label for="Nombre">Matricula</label><br>
+                    <input type="text" id="Matricula" name="txtMatricula" required><br>
+                    <label for="Matricula">Matricula</label><br>
                 </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input type="text" id="Cedula" name="txtCedula"><br>
-                <label for="Cedula">Repuesto asignado</label><br>
+                <input type="text" id="Serial" name="txtSerial"><br>
+                <label for="Serial">Serial del Repuesto</label><br>
                 
             </div>
             <div class="input-field col s6">
-                <input type="text" id="Nombre" name="txtCedula" required><br>
-                <label for="Nombre">Cantidad</label><br>
+                <input type="text" id="Cantidad" name="txtCantidad" required><br>
+                <label for="Cantidad">Cantidad</label><br>
             </div>
         </div>
+        
     </form>
     <div class='center-align'>
-            <button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2" onclick="registrar_clie()">Registrar</button>
-            <a href="inicio.html"><button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2">Regresar</button></a>
+            <button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2" onclick="registrar_regis()">Registrar</button>
+            <a href="inicio.php"><button type="button" id='btn-reg-bot' class="btn waves-effect waves-light red darken-2">Regresar</button></a>
         </div><br><br>
         <h5 id="resultado" class="center-align"></h5><br>
         <div class="right">
-            <a href="fpdf\reportecliente.php" target="_blank"><i class="material-icons left">description</i>Imprimir Reporte</a>
+            <a href="fpdf\reporteregistro.php" target="_blank"><i class="material-icons left">description</i>Imprimir Reporte</a>
         </div><br>
-        <h4 class="card-panel red lighten-3 black-text center">Historial de Clientes</h4><br>
+        <h4 class="card-panel red lighten-3 black-text center">Historial de Reparaciones</h4><br>
+        </div>
         <table class='striped centered'>
         <thead>
             <tr>
-                <th>Cedula</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Sexo</th>
+                <th>ID</th>
+                <th>Matricula</th>
+                <th>Modelo</th>
+                <th>Ced. Clie.</th>
+                <th>Cliente</th>
+                <th>Serial</th>
+                <th>Repuesto</th>
+                <th>Cantidad</th>
+                <th>Ced. Mec.</th>
+                <th>Mecanico</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         
         <tbody id='tablaregistro'>
         </tbody>
         </table>
-    </div>
+    
     </body>
     <br><br>
     <footer class="page-footer red darken-2"><br>
@@ -99,7 +109,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/js/app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>listarcliente()</script>
+    <script>listarregistro()</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
@@ -107,3 +117,6 @@
   });
     </script>
     </html>
+
+
+    
